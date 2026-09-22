@@ -458,11 +458,11 @@ body{
 
         <div class="image-wrapper">
 
-            {% if item.image %}
-            <img src="{{ item.image.url }}" alt="{{ item.name }}">
-            {% else %}
-            <img src="{% static 'images/no-food.jpg' %}" alt="No Image">
-            {% endif %}
+           {% if item.image %}
+<img src="{% static 'image/' %}{{ item.image.name|cut:'menu/' }}" alt="{{ item.name }}">
+{% else %}
+<img src="{% static 'image/no-food.jpg' %}" alt="No Image">
+{% endif %}
 
             {% if item.is_available %}
             <span class="available-tag">
