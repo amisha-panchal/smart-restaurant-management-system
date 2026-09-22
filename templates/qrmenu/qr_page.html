@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Restaurant QR Menu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #f1f5f9,
+        #e2e8f0
+    );
+
+    padding:30px;
+}
+
+.card{
+
+    width:100%;
+    max-width:650px;
+
+    background:white;
+
+    border-radius:30px;
+
+    padding:50px;
+
+    text-align:center;
+
+    box-shadow:
+    0 20px 50px rgba(
+        15,
+        23,
+        42,
+        .12
+    );
+
+}
+
+.icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.title{
+    font-size:42px;
+    font-weight:800;
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#64748b;
+    font-size:16px;
+    margin-bottom:35px;
+    line-height:1.7;
+}
+
+.qr-box{
+
+    background:#f8fafc;
+
+    border:2px dashed #cbd5e1;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    margin-bottom:30px;
+}
+
+.qr-box img{
+    width:280px;
+    max-width:100%;
+}
+
+.info-box{
+
+    background:#fff7ed;
+
+    border-left:5px solid #ff6b35;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    margin-bottom:25px;
+}
+
+.info-box p{
+    color:#7c2d12;
+    font-size:15px;
+}
+
+.btn-group{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+
+    text-decoration:none;
+
+    padding:14px 28px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.download-btn{
+
+    background:#ff6b35;
+    color:white;
+
+    box-shadow:
+    0 10px 25px rgba(
+        255,
+        107,
+        53,
+        .25
+    );
+}
+
+.download-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 30px rgba(
+        255,
+        107,
+        53,
+        .35
+    );
+}
+
+.menu-btn{
+
+    background:#0f172a;
+    color:white;
+}
+
+.menu-btn:hover{
+    background:#1e293b;
+}
+
+.footer-text{
+    margin-top:30px;
+    color:#94a3b8;
+    font-size:14px;
+}
+
+@media(max-width:768px){
+
+    .card{
+        padding:30px;
+    }
+
+    .title{
+        font-size:30px;
+    }
+
+    .qr-box img{
+        width:220px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">
+        🍽
+    </div>
+
+    <h1 class="title">
+        Restaurant QR Menu
+    </h1>
+
+    <p class="subtitle">
+        Scan this QR code to instantly access the restaurant's digital menu and explore all available food items.
+    </p>
+
+    <div class="qr-box">
+
+        <img src="{{ qr_image }}" alt="Restaurant QR Menu">
+
+    </div>
+
+    <div class="info-box">
+
+        <p>
+            📱 Customers can scan this QR code using any smartphone camera to view the menu instantly.
+        </p>
+
+    </div>
+
+    <div class="btn-group">
+
+        <a
+        href="{{ qr_image }}"
+        download
+        class="btn download-btn">
+            📥 Download QR
+        </a>
+
+        <a
+        href="/menu/"
+        class="btn menu-btn">
+            🍔 View Menu
+        </a>
+
+    </div>
+
+    <p class="footer-text">
+        Smart Restaurant Management System
+    </p>
+
+</div>
+
+</body>
+</html>

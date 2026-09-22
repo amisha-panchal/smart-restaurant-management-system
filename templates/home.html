@@ -1,0 +1,789 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Restaurant Management System</title>
+</head>
+<body>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="success-message"
+                 style="
+                 background-color:#d4edda;
+                 color:#155724;
+                 padding:15px;
+                 margin-bottom:15px;
+                 border:1px solid #c3e6cb;
+                 border-radius:5px;
+                 width:fit-content;
+                 font-weight:bold;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h1>Smart Restaurant Management System</h1>
+
+    <br>
+
+    <a href="{% url 'signup' %}">
+        <button>
+            Sign Up
+        </button>
+    </a>
+
+    <a href="{% url 'login' %}">
+        <button>
+            Login
+        </button>
+    </a>
+
+    <script>
+        setTimeout(function () {
+
+            let msg =
+                document.querySelector('.success-message');
+
+            if (msg) {
+                msg.style.display = 'none';
+            }
+
+        }, 5000);
+    </script>
+
+</body>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Smart Restaurant Management System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0b1120;
+color:white;
+overflow-x:hidden;
+}
+
+/* BACKGROUND */
+
+.hero{
+min-height:100vh;
+background:
+linear-gradient(
+rgba(0,0,0,.75),
+rgba(0,0,0,.75)
+),
+url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=2070');
+background-size:cover;
+background-position:center;
+position:relative;
+}
+
+/* NAVBAR */
+
+.navbar{
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:fixed;
+top:0;
+left:0;
+z-index:1000;
+
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(20px);
+
+border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+}
+
+.logo span{
+color:#ff6b35;
+}
+
+.nav-links{
+display:flex;
+gap:35px;
+align-items:center;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-weight:500;
+transition:.3s;
+}
+
+.nav-links a:hover{
+color:#ff6b35;
+}
+
+.btn{
+padding:12px 28px;
+border-radius:50px;
+font-weight:600;
+text-decoration:none;
+transition:.3s;
+}
+
+.login-btn{
+border:1px solid white;
+color:white;
+}
+
+.signup-btn{
+background:#ff6b35;
+color:white;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+max-width:1300px;
+margin:auto;
+padding:180px 8% 100px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:50px;
+flex-wrap:wrap;
+}
+
+.left{
+flex:1;
+min-width:350px;
+}
+
+.left h1{
+font-size:70px;
+line-height:1.1;
+margin-bottom:20px;
+font-weight:800;
+}
+
+.left span{
+color:#ff6b35;
+}
+
+.left p{
+font-size:18px;
+color:#d1d5db;
+line-height:1.8;
+margin-bottom:35px;
+max-width:650px;
+}
+
+.hero-buttons{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+}
+
+/* GLASS CARD */
+
+.right{
+flex:1;
+display:flex;
+justify-content:center;
+}
+
+.dashboard-preview{
+width:100%;
+max-width:500px;
+
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+padding:30px;
+border-radius:30px;
+}
+
+.dashboard-preview h2{
+margin-bottom:25px;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.stat{
+background:rgba(255,255,255,.05);
+padding:20px;
+border-radius:20px;
+text-align:center;
+}
+
+.stat h3{
+font-size:30px;
+color:#ff6b35;
+}
+
+/* FLOATING EFFECT */
+
+.blur1{
+width:300px;
+height:300px;
+background:#ff6b35;
+position:absolute;
+top:120px;
+left:-100px;
+filter:blur(180px);
+opacity:.25;
+}
+
+.blur2{
+width:300px;
+height:300px;
+background:#06b6d4;
+position:absolute;
+bottom:0;
+right:-100px;
+filter:blur(180px);
+opacity:.25;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:991px){
+
+.left h1{
+font-size:50px;
+}
+
+.hero-content{
+text-align:center;
+}
+
+.hero-buttons{
+justify-content:center;
+}
+
+}
+
+@media(max-width:768px){
+
+.nav-links{
+display:none;
+}
+
+.left h1{
+font-size:40px;
+}
+
+.left p{
+font-size:16px;
+}
+
+}
+.container{
+width:90%;
+max-width:1200px;
+margin:auto;
+}
+
+.features-section{
+padding:100px 0;
+background:#0f172a;
+}
+
+.section-heading{
+text-align:center;
+margin-bottom:60px;
+}
+
+.section-heading h2{
+font-size:48px;
+margin-bottom:15px;
+}
+
+.section-heading p{
+color:#94a3b8;
+}
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
+}
+
+.feature-card{
+background:#131c31;
+padding:35px;
+border-radius:25px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.feature-card:hover{
+transform:translateY(-10px);
+}
+
+.icon{
+font-size:40px;
+margin-bottom:15px;
+}
+
+.feature-card h3{
+color:#ff6b35;
+margin-bottom:10px;
+}
+
+.about-section{
+padding:100px 0;
+background:#0b1120;
+}
+
+.about-container{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.about-image img{
+width:100%;
+border-radius:30px;
+}
+
+.about-content span{
+color:#ff6b35;
+letter-spacing:2px;
+}
+
+.about-content h2{
+font-size:45px;
+margin:15px 0;
+}
+
+.about-content p{
+color:#cbd5e1;
+line-height:1.8;
+}
+
+.about-stats{
+display:flex;
+gap:40px;
+margin-top:30px;
+}
+
+.about-stats h3{
+font-size:35px;
+color:#ff6b35;
+}
+
+.contact-section{
+padding:100px 0;
+background:#111827;
+}
+
+.contact-box{
+background:#131c31;
+padding:60px;
+border-radius:30px;
+text-align:center;
+}
+
+.contact-btn{
+display:inline-block;
+padding:15px 35px;
+background:#ff6b35;
+color:white;
+text-decoration:none;
+border-radius:50px;
+margin-top:20px;
+}
+
+.footer{
+padding:80px 0 30px;
+background:#080d18;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1fr;
+gap:40px;
+}
+
+.footer p{
+color:#94a3b8;
+margin:10px 0;
+}
+
+.copyright{
+text-align:center;
+margin-top:40px;
+color:#64748b;
+}
+
+@media(max-width:768px){
+
+.feature-grid{
+grid-template-columns:1fr;
+}
+
+.about-container{
+grid-template-columns:1fr;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+<body>
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert("{{ message }}");
+        </script>
+    {% endfor %}
+{% endif %}
+<div class="hero">
+
+<div class="blur1"></div>
+<div class="blur2"></div>
+
+<nav class="navbar">
+
+<div class="logo">
+🍽 Smart<span>Restaurant</span>
+</div>
+
+<div class="nav-links">
+
+<a href="#">Home</a>
+<a href="#features">Features</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+
+{% comment %} {% if user.is_authenticated %} {% endcomment %}
+{% if request.user.is_authenticated %}
+
+    {% if request.user.role == "customer" %}
+
+        <a href="{% url 'menu_list' %}" class="btn signup-btn">
+            🍽 Menu
+        </a>
+
+        <a href="{% url 'create_reservation' %}" class="btn login-btn">
+            📅 Reservation
+        </a>
+
+    {% else %}
+
+        <a href="{% url 'dashboard' %}" class="btn signup-btn">
+            📊 Dashboard
+        </a>
+
+    {% endif %}
+
+    <a href="{% url 'logout' %}" class="btn login-btn">
+        Logout
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}" class="btn login-btn">
+        Login
+    </a>
+
+    <a href="{% url 'signup' %}" class="btn signup-btn">
+        Sign Up
+    </a>
+
+{% endif %}
+</div>
+
+</nav>
+
+<div class="hero-content">
+
+<div class="left">
+
+<h1>
+Manage Your
+<span>Restaurant</span>
+Smarter
+</h1>
+
+<p>
+A complete restaurant management solution
+for orders, reservations, inventory,
+billing, analytics and employee management
+all from one intelligent dashboard.
+</p>
+
+<div class="hero-buttons">
+
+<a href="{% url 'signup' %}" class="btn signup-btn">
+Get Started
+</a>
+
+<a href="{% url 'login' %}" class="btn login-btn">
+Live Demo
+</a>
+
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="dashboard-preview">
+
+<h2>Dashboard Overview</h2>
+
+<div class="stats">
+
+<div class="stat">
+<h3>245</h3>
+<p>Orders Today</p>
+</div>
+
+<div class="stat">
+<h3>₹42K</h3>
+<p>Revenue</p>
+</div>
+
+<div class="stat">
+<h3>32</h3>
+<p>Reservations</p>
+</div>
+
+<div class="stat">
+<h3>5</h3>
+<p>Low Stock</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+</div>
+
+</div>
+{% if request.user.is_authenticated and request.user.role == "customer" %}
+
+<section style="padding:100px 8%; background:#111827;">
+
+    <div class="section-heading">
+        <h2>🍽 Customer Dashboard</h2>
+        <p>Access all restaurant services from one place</p>
+    </div>
+
+    <div class="feature-grid">
+
+        <a href="{% url 'menu_list' %}" style="text-decoration:none;color:white;">
+            <div class="feature-card">
+                <div class="icon">🍽️</div>
+                <h3>Menu</h3>
+                <p>Explore delicious food and drinks.</p>
+            </div>
+        </a>
+
+        <a href="{% url 'create_reservation' %}" style="text-decoration:none;color:white;">
+            <div class="feature-card">
+                <div class="icon">📅</div>
+                <h3>Reservation</h3>
+                <p>Book your table in advance.</p>
+            </div>
+        </a>
+
+        <a href="{% url 'order_history' %}" style="text-decoration:none;color:white;">
+            <div class="feature-card">
+                <div class="icon">📋</div>
+                <h3>Order History</h3>
+                <p>Track all your previous orders.</p>
+            </div>
+        </a>
+
+        <a href="{% url 'feedback_list' %}" style="text-decoration:none;color:white;">
+            <div class="feature-card">
+                <div class="icon">⭐</div>
+                <h3>Feedback</h3>
+                <p>Rate food and share your experience.</p>
+            </div>
+        </a>
+
+    </div>
+
+</section>
+
+{% endif %}
+{% if not request.user.is_authenticated or request.user.role != "customer" %}
+
+<!-- FEATURES SECTION -->
+
+<section class="features-section" id="features">
+
+    <div class="container">
+
+        <div class="section-heading">
+            <h2>Powerful Features</h2>
+            <p>Everything you need to manage your restaurant efficiently.</p>
+        </div>
+
+        <div class="feature-grid">
+
+            <!-- your existing feature cards -->
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+</section>
+
+<!-- ABOUT SECTION -->
+
+<section class="about-section" id="about">
+
+    <div class="container about-container">
+
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1600" alt="Restaurant">
+        </div>
+
+        <div class="about-content">
+
+            <span>ABOUT US</span>
+
+            <h2>Smart Restaurant Management System</h2>
+
+            <p>
+                Smart Restaurant Management System helps restaurants streamline operations,
+                improve customer experience, manage staff, inventory, orders and increase profitability.
+            </p>
+
+            <div class="about-stats">
+
+                <div>
+                    <h3>500+</h3>
+                    <p>Daily Orders</p>
+                </div>
+
+                <div>
+                    <h3>120+</h3>
+                    <p>Tables Managed</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CONTACT SECTION -->
+
+<section class="contact-section" id="contact">
+
+    <div class="container">
+
+        <div class="contact-box">
+
+            <h2>Need Help?</h2>
+
+            <p>Our team is always ready to help your restaurant grow.</p>
+
+            <div class="contact-info">
+
+                <div>📧 support@smartrestaurant.com</div>
+
+                <div>📞 +91 9876543210</div>
+
+            </div>
+
+            <a href="#" class="contact-btn">
+                Contact Us
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <div class="container footer-grid">
+
+        <div>
+            <h2>🍽 Smart Restaurant</h2>
+            <p>Modern Restaurant Management Solution</p>
+        </div>
+
+        <div>
+            <h3>Features</h3>
+            <p>Orders</p>
+            <p>Inventory</p>
+            <p>Analytics</p>
+        </div>
+
+        <div>
+            <h3>Company</h3>
+            <p>About</p>
+            <p>Support</p>
+            <p>Contact</p>
+        </div>
+
+        <div>
+            <h3>Contact</h3>
+            <p>support@smartrestaurant.com</p>
+            <p>+91 9876543210</p>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Smart Restaurant Management System
+    </div>
+
+</footer>
+
+</body>
+</html>

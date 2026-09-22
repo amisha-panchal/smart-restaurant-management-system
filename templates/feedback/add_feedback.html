@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Add Feedback</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #eef2ff,
+        #f8fafc
+    );
+    padding:30px;
+}
+
+.card{
+    width:100%;
+    max-width:750px;
+    background:white;
+    padding:40px;
+    border-radius:30px;
+    box-shadow:0 20px 50px rgba(15,23,42,.12);
+}
+
+.back-btn{
+    display:inline-block;
+    text-decoration:none;
+    color:white;
+    background:#0f172a;
+    padding:12px 22px;
+    border-radius:12px;
+    margin-bottom:25px;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    transform:translateY(-3px);
+}
+
+.title{
+    text-align:center;
+    font-size:42px;
+    color:#0f172a;
+    margin-bottom:10px;
+    font-weight:800;
+}
+
+.subtitle{
+    text-align:center;
+    color:#64748b;
+    margin-bottom:35px;
+}
+
+.form-group{
+    margin-bottom:22px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:#0f172a;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:14px;
+    border:2px solid #e2e8f0;
+    border-radius:14px;
+    font-size:15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:#ff6b35;
+}
+
+textarea{
+    resize:none;
+}
+
+.btn{
+    width:100%;
+    border:none;
+    background:linear-gradient(
+        135deg,
+        #ff6b35,
+        #ff8f66
+    );
+    color:white;
+    padding:16px;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-3px);
+}
+
+.food-icon{
+    text-align:center;
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <a href="/feedback/" class="back-btn">
+        ← Feedback List
+    </a>
+
+    <div class="food-icon">
+        🍽️
+    </div>
+
+    <h1 class="title">
+        Customer Food Review
+    </h1>
+
+    <p class="subtitle">
+        Share your experience about a specific food item
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <label>Food Item</label>
+
+            <select
+            name="menu_item"
+            required>
+
+                <option value="">
+                    Select Food Item
+                </option>
+
+                {% for item in menu_items %}
+
+                <option value="{{ item.id }}">
+                    {{ item.name }}
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Customer Name</label>
+
+            <input
+            type="text"
+            name="customer_name"
+            placeholder="Enter your name"
+            required>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Rating</label>
+
+            <select name="rating" required>
+
+                <option value="">
+                    Select Rating
+                </option>
+
+                <option value="5">
+                    ⭐⭐⭐⭐⭐ Excellent
+                </option>
+
+                <option value="4">
+                    ⭐⭐⭐⭐ Very Good
+                </option>
+
+                <option value="3">
+                    ⭐⭐⭐ Good
+                </option>
+
+                <option value="2">
+                    ⭐⭐ Fair
+                </option>
+
+                <option value="1">
+                    ⭐ Poor
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Review Message</label>
+
+            <textarea
+            name="message"
+            rows="5"
+            placeholder="Write your review..."
+            required></textarea>
+
+        </div>
+
+        <button
+        type="submit"
+        class="btn">
+
+            ⭐ Submit Review
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

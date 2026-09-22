@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Order</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ff6b35,#ff9f43,#f5f7fb);
+    overflow:hidden;
+}
+
+.order-card{
+    width:100%;
+    max-width:500px;
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.header{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.header h1{
+    font-size:32px;
+    color:#111827;
+}
+
+.header p{
+    font-size:14px;
+    color:#64748b;
+    margin-top:5px;
+}
+
+.food-name{
+    font-size:28px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:15px;
+}
+
+.price-box{
+    background:#fff7ed;
+    border-left:5px solid #ff6b35;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.price-box h2{
+    color:#ff6b35;
+    font-size:34px;
+}
+
+.price-box p{
+    color:#555;
+}
+
+label{
+    font-size:22px;
+    font-weight:600;
+    color:#111827;
+}
+
+.qty-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+    margin-top:10px;
+}
+
+.qty-box button{
+    width:45px;
+    height:45px;
+    border:none;
+    border-radius:12px;
+    background:#ff6b35;
+    color:white;
+    font-size:24px;
+    cursor:pointer;
+}
+
+.qty-box input{
+    width:80px;
+    height:45px;
+    text-align:center;
+    border:2px solid #ddd;
+    border-radius:12px;
+    font-size:18px;
+}
+
+.total-box{
+    margin-top:15px;
+    background:#f8fafc;
+    padding:15px;
+    border-radius:12px;
+}
+
+.total-box h3{
+    color:#111827;
+}
+
+.summary-box{
+    margin-top:10px;
+    background:#fff7ed;
+    padding:15px;
+    border-radius:12px;
+}
+
+.summary-box h4{
+    margin-bottom:8px;
+}
+
+.summary-box p{
+    font-size:14px;
+}
+
+.place-btn{
+    width:100%;
+    margin-top:15px;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    background:#ff6b35;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.place-btn:hover{
+    background:#e85a2b;
+}
+
+.back-link{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    text-decoration:none;
+    color:#64748b;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="order-card">
+
+    <div class="header">
+        <h1>🍕 Create Order</h1>
+        <p>Select quantity and place your order</p>
+    </div>
+
+    <div class="food-name">
+        {{ item.name }}
+    </div>
+
+    <div class="price-box">
+        <h2>₹{{ item.price }}</h2>
+        <p>Price Per Item</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Quantity</label>
+
+        <div class="qty-box">
+
+            <button type="button" onclick="decreaseQty()">−</button>
+
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                value="1"
+                min="1"
+                readonly
+            >
+
+            <button type="button" onclick="increaseQty()">+</button>
+
+        </div>
+
+        <div class="total-box">
+            <h3>
+                Total Amount:
+                ₹<span id="total">{{ item.price }}</span>
+            </h3>
+        </div>
+
+        <div class="summary-box">
+            <h4>Order Summary</h4>
+
+            <p>
+                {{ item.name }}
+                ×
+                <span id="qtyText">1</span>
+            </p>
+        </div>
+
+        <button class="place-btn" type="submit">
+            Place Order
+        </button>
+
+    </form>
+
+    <a href="{% url 'menu_list' %}" class="back-link">
+        ← Back To Menu
+    </a>
+
+</div>
+
+<script>
+
+let price = parseFloat("{{ item.price }}");
+
+function updateTotal(){
+
+    let qty = parseInt(
+        document.getElementById("quantity").value
+    );
+
+    let total = qty * price;
+
+    document.getElementById("total").innerText =
+        total.toFixed(2);
+
+    document.getElementById("qtyText").innerText =
+        qty;
+}
+
+function increaseQty(){
+
+    let qty =
+    document.getElementById("quantity");
+
+    qty.value =
+    parseInt(qty.value) + 1;
+
+    updateTotal();
+}
+
+function decreaseQty(){
+
+    let qty =
+    document.getElementById("quantity");
+
+    if(parseInt(qty.value) > 1){
+
+        qty.value =
+        parseInt(qty.value) - 1;
+
+        updateTotal();
+    }
+}
+
+</script>
+
+</body>
+</html>

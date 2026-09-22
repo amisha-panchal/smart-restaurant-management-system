@@ -1,0 +1,553 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Restaurant Menu Management</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#f8fafc,#eef2ff);
+    padding:40px;
+}
+
+/* BACK BUTTON */
+
+.back-btn{
+    display:inline-block;
+    padding:12px 25px;
+    background:#111827;
+    color:white;
+    text-decoration:none;
+    border-radius:12px;
+    margin-bottom:30px;
+    transition:.3s;
+    font-weight:600;
+}
+
+.back-btn:hover{
+    background:#ff6b35;
+    transform:translateY(-2px);
+}
+
+/* HEADER */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    margin-bottom:35px;
+}
+
+.header-left h1{
+    font-size:44px;
+    color:#111827;
+    margin-bottom:5px;
+    font-weight:700;
+}
+
+.subtitle{
+    color:#6b7280;
+    font-size:15px;
+}
+
+.header-right{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.search-form{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.search-box{
+    padding:14px 20px;
+    width:320px;
+    border:none;
+    outline:none;
+    border-radius:14px;
+    background:white;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.add-btn{
+    padding:14px 24px;
+    background:linear-gradient(
+        135deg,
+        #ff6b35,
+        #ff8f66
+    );
+    color:white;
+    text-decoration:none;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+    border:none;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(255,107,53,.25);
+}
+
+.add-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* FILTERS */
+
+.filters{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:35px;
+}
+
+.filter-btn{
+    text-decoration:none;
+    padding:12px 22px;
+    border-radius:30px;
+    background:white;
+    color:#374151;
+    font-weight:600;
+    box-shadow:0 5px 15px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.filter-btn:hover{
+    background:#111827;
+    color:white;
+}
+
+.filter-btn.active{
+    background:#ff6b35;
+    color:white;
+}
+
+/* GRID */
+
+.menu-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(350px,1fr));
+    gap:30px;
+}
+
+/* CARD */
+
+.card{
+    background:white;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+    transition:.4s;
+    border:1px solid #f1f5f9;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(255,107,53,.15);
+}
+
+.image-wrapper{
+    position:relative;
+}
+
+.card img{
+    width:100%;
+    height:240px;
+    object-fit:cover;
+}
+
+.available-tag,
+.stock-tag{
+    position:absolute;
+    top:15px;
+    right:15px;
+    padding:8px 14px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
+}
+
+.available-tag{
+    background:#22c55e;
+}
+
+.stock-tag{
+    background:#ef4444;
+}
+
+.card-content{
+    padding:22px;
+}
+
+.card-content h3{
+    font-size:26px;
+    color:#111827;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.card-content p{
+    color:#6b7280;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.price{
+    font-size:30px;
+    font-weight:700;
+    color:#ff6b35;
+}
+
+.badge{
+    background:#fff1eb;
+    color:#ff6b35;
+    padding:8px 16px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* REVIEW SECTION */
+
+.food-review{
+    display:flex;
+    gap:10px;
+    margin:18px 0;
+    flex-wrap:wrap;
+}
+
+.rating-box{
+    background:linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+    color:white;
+    padding:8px 14px;
+    border-radius:25px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.review-box{
+    background:#f3f4f6;
+    color:#374151;
+    padding:8px 14px;
+    border-radius:25px;
+    font-size:13px;
+    font-weight:600;
+}
+
+/* ORDER BUTTON */
+
+.order-btn{
+    display:block;
+    text-align:center;
+    background:linear-gradient(
+        135deg,
+        #22c55e,
+        #16a34a
+    );
+    color:white;
+    text-decoration:none;
+    padding:14px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+    margin-top:15px;
+}
+
+.order-btn:hover{
+    transform:translateY(-3px);
+}
+
+/* ADMIN BUTTONS */
+
+.action-buttons{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.edit-btn,
+.delete-btn{
+    display:inline-block;
+    padding:10px 18px;
+    text-decoration:none;
+    border-radius:10px;
+    color:white;
+    font-size:14px;
+    transition:.3s;
+}
+
+.edit-btn{
+    background:#111827;
+}
+
+.edit-btn:hover{
+    background:#ff6b35;
+}
+
+.delete-btn{
+    background:#ef4444;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    body{
+        padding:20px;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .header-left h1{
+        font-size:32px;
+    }
+
+    .header-right{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .search-form{
+        width:100%;
+        flex-direction:column;
+    }
+
+    .search-box{
+        width:100%;
+    }
+
+    .add-btn{
+        width:100%;
+        text-align:center;
+    }
+
+    .menu-grid{
+        grid-template-columns:1fr;
+    }
+
+    .card img{
+        height:220px;
+    }
+}
+    </style>
+  </head>
+
+ <body>
+
+<a href="{% url 'dashboard' %}" class="back-btn">
+    ← Back to Dashboard
+</a>
+
+<div class="header">
+
+    <div class="header-left">
+
+        <h1>🍽 Restaurant Menu</h1>
+
+        <p class="subtitle">
+            Total Menu Items : {{ items|length }} |
+            Categories : {{ categories|length }}
+        </p>
+
+    </div>
+
+    <div class="header-right">
+
+        <form method="GET" class="search-form">
+
+            {% if request.GET.category %}
+            <input
+                type="hidden"
+                name="category"
+                value="{{ request.GET.category }}"
+            >
+            {% endif %}
+
+            <input
+                type="text"
+                name="search"
+                value="{{ request.GET.search }}"
+                placeholder="🔍 Search menu items..."
+                class="search-box"
+                onkeyup="this.form.submit()"
+            >
+
+            <button type="submit" class="add-btn">
+                Search
+            </button>
+
+        </form>
+
+        <a href="{% url 'cart' %}" class="add-btn">
+            🛒 View Cart
+        </a>
+
+        {% if request.user.role == "admin" %}
+        <a href="/admin/menu/menuitem/add/" class="add-btn">
+            + Add Menu Item
+        </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="filters">
+
+    <a
+        href="{% url 'menu_list' %}"
+        class="filter-btn {% if not request.GET.category %}active{% endif %}">
+        All
+    </a>
+
+    {% for category in categories %}
+
+    <a
+        href="?category={{ category.name }}&search={{ request.GET.search }}"
+        class="filter-btn {% if request.GET.category == category.name %}active{% endif %}">
+        {{ category.name }}
+    </a>
+
+    {% endfor %}
+
+</div>
+
+<div class="menu-grid">
+
+    {% for item in items %}
+
+    <div class="card">
+
+        <div class="image-wrapper">
+
+            {% if item.image %}
+            <img src="{{ item.image.url }}" alt="{{ item.name }}">
+            {% else %}
+            <img src="{% static 'images/no-food.jpg' %}" alt="No Image">
+            {% endif %}
+
+            {% if item.is_available %}
+            <span class="available-tag">
+                ✅ Available
+            </span>
+            {% else %}
+            <span class="stock-tag">
+                ❌ Out Of Stock
+            </span>
+            {% endif %}
+
+        </div>
+
+        <div class="card-content">
+
+            <h3>{{ item.name }}</h3>
+
+            <p>{{ item.description }}</p>
+
+            <div class="price-row">
+
+                <div class="price">
+                    ₹{{ item.price }}
+                </div>
+
+                <div class="badge">
+                    {{ item.category.name }}
+                </div>
+
+            </div>
+
+            <!-- Reviews Section -->
+
+            <div class="food-review">
+
+                <div class="rating-box">
+                    ⭐ {{ item.avg_rating|default:"0"|floatformat:1 }}
+                </div>
+
+                <div class="review-box">
+                    📝 {{ item.review_count }} Reviews
+                </div>
+
+            </div>
+
+            {% if item.is_available %}
+
+            <a href="{% url 'add_to_cart' item.id %}" class="order-btn">
+                🛒 Add To Cart
+            </a>
+
+            {% endif %}
+
+            {% if request.user.role == "admin" %}
+
+            <div class="action-buttons">
+
+                <a
+                    href="/admin/menu/menuitem/{{ item.id }}/change/"
+                    class="edit-btn">
+
+                    ✏ Edit Item
+
+                </a>
+
+                <a
+                    href="/admin/menu/menuitem/{{ item.id }}/delete/"
+                    class="delete-btn"
+                    onclick="return confirm('Delete {{ item.name }} ?')">
+
+                    🗑 Delete
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

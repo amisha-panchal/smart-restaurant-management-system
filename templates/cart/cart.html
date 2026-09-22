@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Shopping Cart</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    padding:40px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+}
+
+.card{
+    background:#fff;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+h1{
+    color:#111827;
+    margin-bottom:30px;
+    font-size:40px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#0f172a;
+    color:white;
+    padding:18px;
+    font-size:18px;
+}
+
+th:first-child{
+    border-radius:12px 0 0 0;
+}
+
+th:last-child{
+    border-radius:0 12px 0 0;
+}
+
+td{
+    padding:22px 15px;
+    text-align:center;
+    border-bottom:1px solid #eee;
+    font-size:17px;
+}
+
+tr:hover{
+    background:#fff7f3;
+}
+
+.food-name{
+    font-weight:600;
+    color:#111827;
+}
+
+.qty-box{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+}
+
+.qty-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:#ff6b35;
+    color:white;
+    text-decoration:none;
+    font-size:24px;
+    font-weight:bold;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.3s;
+}
+
+.qty-btn:hover{
+    background:#ff824d;
+    transform:scale(1.1);
+}
+
+.qty-number{
+    font-size:18px;
+    font-weight:600;
+    min-width:25px;
+}
+
+.remove-btn{
+    color:#ff3b30;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.remove-btn:hover{
+    text-decoration:underline;
+}
+
+.total-section{
+    margin-top:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.total-box{
+    background:#fff7f3;
+    padding:20px 30px;
+    border-radius:15px;
+}
+
+.total-box h2{
+    color:#ff6b35;
+    font-size:38px;
+}
+
+.button-group{
+    display:flex;
+    gap:15px;
+}
+
+.btn{
+    padding:15px 28px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+    color:white;
+    transition:.3s;
+}
+
+.shop-btn{
+    background:#0f172a;
+}
+
+.shop-btn:hover{
+    background:#1e293b;
+}
+
+.order-btn{
+    background:#ff6b35;
+}
+
+.order-btn:hover{
+    background:#ff824d;
+}
+
+.empty{
+    text-align:center;
+    padding:80px;
+}
+
+.empty h2{
+    margin-bottom:20px;
+}
+
+.browse-btn{
+    background:#ff6b35;
+    color:white;
+    padding:14px 30px;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.browse-btn:hover{
+    background:#ff824d;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>🛒 My Cart</h1>
+
+{% if cart and cart.items.all %}
+
+<table>
+
+<tr>
+    <th>Food Item</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Subtotal</th>
+    <th>Action</th>
+</tr>
+
+{% for item in cart.items.all %}
+
+<tr>
+
+<td class="food-name">
+    {{ item.menu_item.name }}
+</td>
+
+<td>
+    ₹{{ item.menu_item.price }}
+</td>
+
+<td>
+
+<div class="qty-box">
+
+<a class="qty-btn"
+href="{% url 'decrease_quantity' item.menu_item.id %}">
+−
+</a>
+
+<span class="qty-number">
+{{ item.quantity }}
+</span>
+
+<a class="qty-btn"
+href="{% url 'increase_quantity' item.menu_item.id %}">
++
+</a>
+
+</div>
+
+</td>
+
+<td>
+₹{{ item.subtotal }}
+</td>
+
+<td>
+
+<a class="remove-btn"
+href="{% url 'remove_from_cart' item.menu_item.id %}">
+🗑 Remove
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<div class="total-section">
+
+<div class="total-box">
+    <h2>₹{{ cart.total_amount }}</h2>
+    <p>Grand Total</p>
+</div>
+
+<div class="button-group">
+
+<a href="/menu/" class="btn shop-btn">
+🍔 Continue Shopping
+</a>
+
+<a href="{% url 'place_order' %}" class="btn order-btn">
+📦 Place Order
+</a>
+
+</div>
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+<h2>🛒 Your Cart is Empty</h2>
+
+<br>
+
+<a href="/menu/" class="browse-btn">
+Browse Menu
+</a>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>

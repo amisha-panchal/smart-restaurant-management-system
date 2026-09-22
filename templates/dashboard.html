@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Dashboard</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+     *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#0f172a;
+    color:white;
+    position:fixed;
+    left:0;
+    top:0;
+    padding:30px 20px;
+    overflow-y:auto;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:40px;
+    color:#ff6b35;
+}
+
+.logo span{
+    color:white;
+}
+
+.sidebar a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:14px 18px;
+    margin-bottom:10px;
+    border-radius:12px;
+    transition:.3s;
+    font-size:15px;
+}
+
+.sidebar a:hover{
+    background:#ff6b35;
+    transform:translateX(5px);
+}
+
+/* MAIN */
+
+.main{
+    margin-left:260px;
+    width:100%;
+    padding:35px;
+}
+
+/* TOPBAR */
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.welcome h2{
+    font-size:42px;
+    color:#0f172a;
+    margin-bottom:5px;
+}
+
+.welcome p{
+    color:#64748b;
+    font-size:18px;
+}
+
+/* TOP ACTIONS */
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+/* NOTIFICATION BUTTON */
+
+.notification-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:white;
+    color:#0f172a;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.notification-btn:hover{
+    background:#ff6b35;
+    color:white;
+    transform:translateY(-3px);
+}
+
+/* HOME BUTTON */
+
+.home-btn{
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+    background:linear-gradient(135deg,#ff6b35,#ff7f50);
+    padding:14px 28px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(255,107,53,.25);
+    transition:.3s;
+}
+
+.home-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(255,107,53,.35);
+}
+
+/* DASHBOARD CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h3{
+    font-size:42px;
+    color:#ff6b35;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#64748b;
+    font-size:18px;
+}
+
+/* TABLE BOX */
+
+.table-box{
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+    margin-bottom:30px;
+}
+
+.table-box h2{
+    color:#0f172a;
+    margin-bottom:15px;
+}
+
+/* TABLE */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+th{
+    background:#0f172a;
+    color:white;
+    padding:16px;
+    text-align:left;
+}
+
+th:first-child{
+    border-top-left-radius:10px;
+}
+
+th:last-child{
+    border-top-right-radius:10px;
+}
+
+td{
+    padding:16px;
+    border-bottom:1px solid #eef2f7;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+/* STATUS BADGES */
+
+.status{
+    padding:8px 14px;
+    border-radius:20px;
+    color:white;
+    font-size:13px;
+    font-weight:600;
+}
+
+.booked{
+    background:#f59e0b;
+}
+
+.seated{
+    background:#3b82f6;
+}
+
+.completed{
+    background:#10b981;
+}
+
+.cancelled{
+    background:#ef4444;
+}
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#ff6b35;
+    border-radius:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:992px){
+
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .welcome h2{
+        font-size:32px;
+    }
+}
+
+@media(max-width:768px){
+
+    body{
+        flex-direction:column;
+    }
+
+    .sidebar{
+        width:100%;
+        height:auto;
+        position:relative;
+    }
+
+    .main{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
+    }
+
+    .top-actions{
+        width:100%;
+        justify-content:flex-start;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .welcome h2{
+        font-size:28px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    .table-box{
+        overflow-x:auto;
+    }
+}
+    </style>
+  </head>
+  <body>
+
+    <div class="sidebar">
+
+    <div class="logo">
+        🍽 <span>SmartRestaurant</span>
+    </div>
+
+    <a href="{% url 'menu_list' %}">
+        Menu Management
+    </a>
+
+    <a href="/qr-menu/">
+        QR Menu
+    </a>
+
+    <a href="/feedback/">
+        Feedback
+    </a>
+
+    <!-- Orders -->
+    {% if role == "admin" or role == "waiter" or role == "chef" or role == "cashier" %}
+    <a href="/orders/">
+        Orders
+    </a>
+    {% endif %}
+
+    <!-- Reservations -->
+    {% if role == "admin" or role == "waiter" %}
+    <a href="/reservations/">
+        Reservations
+    </a>
+    {% endif %}
+
+    <!-- Employees -->
+    {% if role == "admin" %}
+    <a href="/employees/">
+        Employees
+    </a>
+    {% endif %}
+
+    <!-- Inventory -->
+    {% if role == "admin" %}
+    <a href="{% url 'inventory_list' %}">
+        Inventory
+    </a>
+    {% endif %}
+
+    <!-- Billing -->
+    {% if role == "admin" or role == "cashier" %}
+    <a href="{% url 'bill_list' %}">
+        Billing
+    </a>
+    {% endif %}
+
+    <!-- Reports -->
+    {% if role == "admin" %}
+    <a href="/reports/">
+        Reports
+    </a>
+    {% endif %}
+
+    <!-- Notifications -->
+    {% if role != "customer" %}
+    <a href="{% url 'notifications' %}">
+        🔔 Notifications
+    </a>
+    {% endif %}
+
+    <a href="{% url 'logout' %}">
+        Logout
+    </a>
+
+</div>
+
+    <div class="main">
+
+        <div class="topbar">
+
+            <div class="welcome">
+
+                <h2>
+                    Welcome, {{ request.user.username }}
+                </h2>
+
+                <p>
+                    Role: {{ role }}
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <a href="{% url 'notifications' %}"
+                   class="notification-btn">
+                    🔔
+                </a>
+
+                <a href="{% url 'home' %}"
+                   class="home-btn">
+                    🏠 Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>{{ total_orders }}</h3>
+                <p>Total Orders</p>
+            </div>
+
+            <div class="card">
+                <h3>₹{{ total_revenue }}</h3>
+                <p>Total Revenue</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ pending_orders }}</h3>
+                <p>Pending Orders</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ served_orders }}</h3>
+                <p>Served Orders</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ preparing_orders }}</h3>
+                <p>Preparing Orders</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ total_reservations }}</h3>
+                <p>Reservations</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ available_tables }}</h3>
+                <p>Available Tables</p>
+            </div>
+
+            <div class="card">
+                <h3>{{ low_stock }}</h3>
+                <p>Low Stock Alerts</p>
+            </div>
+
+        </div>
+
+        <div class="table-box">
+
+            <h2>📋 Recent Orders</h2>
+
+            <table>
+
+                <tr>
+                    <th>Order ID</th>
+                    <th>Food Item</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for order in recent_orders %}
+
+                <tr>
+
+                    <td>#{{ order.order.id }}</td>
+
+                    <td>{{ order.menu_item.name }}</td>
+
+                    <td>{{ order.quantity }}</td>
+
+                    <td>{{ order.order.status }}</td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="4">
+                        No Orders Found
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+        <div class="table-box" style="margin-top:30px;">
+
+            <h2>📅 Upcoming Reservations</h2>
+
+            <table>
+
+                <tr>
+                    <th>Customer</th>
+                    <th>Table</th>
+                    <th>Guests</th>
+                    <th>Date & Time</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for reservation in upcoming_reservations %}
+
+                <tr>
+
+                    <td>
+                        {{ reservation.customer_name }}
+                    </td>
+
+                    <td>
+                        Table {{ reservation.table_number }}
+                    </td>
+
+                    <td>
+                        {{ reservation.guests }}
+                    </td>
+
+                    <td>
+                        {{ reservation.reservation_time }}
+                    </td>
+
+                    <td>
+
+                        {% if reservation.status == 'Booked' %}
+
+                        <span class="status booked">
+                            Booked
+                        </span>
+
+                        {% elif reservation.status == 'Seated' %}
+
+                        <span class="status seated">
+                            Seated
+                        </span>
+
+                        {% elif reservation.status == 'Completed' %}
+
+                        <span class="status completed">
+                            Completed
+                        </span>
+
+                        {% else %}
+
+                        <span class="status cancelled">
+                            Cancelled
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5">
+                        No Upcoming Reservations
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

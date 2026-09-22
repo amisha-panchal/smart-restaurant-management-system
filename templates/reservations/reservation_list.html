@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reservations</title>
+
+    <style>
+
+       *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    padding:40px;
+}
+
+.container{
+    max-width:1300px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+}
+
+h1{
+    color:#0f172a;
+    font-size:52px;
+    font-weight:700;
+}
+
+.btn{
+    text-decoration:none;
+    color:white;
+    font-weight:600;
+    transition:.3s;
+}
+
+/* Dashboard Button */
+
+.dashboard-btn{
+    background:#0f172a;
+    padding:14px 28px;
+    border-radius:16px;
+    margin-right:10px;
+    display:inline-block;
+}
+
+.dashboard-btn:hover{
+    background:#1e293b;
+    transform:translateY(-3px);
+}
+
+/* Reservation Button */
+
+.book-btn{
+    background:linear-gradient(
+        135deg,
+        #ff6b35,
+        #ff7f50
+    );
+
+    padding:14px 28px;
+    border-radius:16px;
+    display:inline-block;
+
+    box-shadow:0 10px 25px rgba(
+        255,
+        107,
+        53,
+        .25
+    );
+}
+
+.book-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 30px rgba(
+        255,
+        107,
+        53,
+        .35
+    );
+}
+
+/* Table */
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:18px;
+}
+
+th{
+    background:#0f172a;
+    color:white;
+    padding:18px;
+    text-align:center;
+    font-size:15px;
+    font-weight:600;
+}
+
+td{
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid #f1f5f9;
+}
+
+tr:hover{
+    background:#f8fafc;
+}
+
+/* Status Badges */
+
+.status{
+    padding:10px 18px;
+    border-radius:30px;
+    color:white;
+    font-size:13px;
+    font-weight:600;
+}
+
+.booked{
+    background:#f59e0b;
+}
+
+.seated{
+    background:#3b82f6;
+}
+
+.completed{
+    background:#10b981;
+}
+
+.cancelled{
+    background:#ef4444;
+}
+
+/* Dropdown */
+
+select{
+    padding:10px 15px;
+    border-radius:12px;
+    border:1px solid #d1d5db;
+    background:white;
+    cursor:pointer;
+    font-weight:500;
+    transition:.3s;
+}
+
+select:focus{
+    outline:none;
+    border-color:#ff6b35;
+}
+
+/* Empty State */
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.empty h2{
+    color:#0f172a;
+    margin-bottom:15px;
+}
+
+.empty p{
+    color:#6b7280;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    h1{
+        font-size:34px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    th,
+    td{
+        padding:12px;
+    }
+
+    .dashboard-btn,
+    .book-btn{
+        display:block;
+        width:100%;
+        margin:5px 0;
+        text-align:center;
+    }
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+    <div class="header">
+
+        <h1>📅 Reservations</h1>
+
+        <div>
+
+            <a href="/dashboard/" class="btn dashboard-btn">
+                   ← Back to Dashboard
+            </a>
+
+            <a href="{% url 'create_reservation' %}" class="btn book-btn">
+                + New Reservation
+            </a>
+
+        </div>
+
+    </div>
+
+    {% if reservations %}
+
+    <table>
+
+        <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Guests</th>
+            <th>Table</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+            <th>Update</th>
+        </tr>
+
+        {% for reservation in reservations %}
+
+        <tr>
+
+            <td>{{ reservation.customer_name }}</td>
+
+            <td>{{ reservation.phone }}</td>
+
+            <td>{{ reservation.guests }}</td>
+
+            <td>Table {{ reservation.table_number }}</td>
+
+            <td>{{ reservation.reservation_time }}</td>
+
+            <td>
+
+                {% if reservation.status == "Booked" %}
+                    <span class="status booked">
+                        Booked
+                    </span>
+
+                {% elif reservation.status == "Seated" %}
+                    <span class="status seated">
+                        Seated
+                    </span>
+
+                {% elif reservation.status == "Completed" %}
+                    <span class="status completed">
+                        Completed
+                    </span>
+
+                {% else %}
+                    <span class="status cancelled">
+                        Cancelled
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+
+                <form
+                    method="POST"
+                    action="{% url 'update_reservation_status' reservation.id %}"
+                >
+
+                    {% csrf_token %}
+
+                    <select
+                        name="status"
+                        onchange="this.form.submit()"
+                    >
+
+                        <option value="Booked"
+                        {% if reservation.status == 'Booked' %}selected{% endif %}>
+                            Booked
+                        </option>
+
+                        <option value="Seated"
+                        {% if reservation.status == 'Seated' %}selected{% endif %}>
+                            Seated
+                        </option>
+
+                        <option value="Completed"
+                        {% if reservation.status == 'Completed' %}selected{% endif %}>
+                            Completed
+                        </option>
+
+                        <option value="Cancelled"
+                        {% if reservation.status == 'Cancelled' %}selected{% endif %}>
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h2>No Reservations Found</h2>
+
+        <br>
+
+        <a href="{% url 'create_reservation' %}" class="btn book-btn">
+            Create First Reservation
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</div>
+
+</body>
+</html>

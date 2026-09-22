@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(
+        135deg,
+        #f8fafc,
+        #eef4ff
+    );
+    min-height:100vh;
+    padding:30px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#0f172a;
+    font-size:42px;
+    font-weight:700;
+}
+
+/* Home Button */
+
+.home-btn{
+    text-decoration:none;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e293b
+    );
+    color:white;
+    padding:14px 24px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.3s;
+    box-shadow:0 10px 25px rgba(
+        15,
+        23,
+        42,
+        .20
+    );
+}
+
+.home-btn:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 35px rgba(
+        15,
+        23,
+        42,
+        .30
+    );
+}
+
+/* Orders */
+
+.orders-grid{
+    display:grid;
+    gap:25px;
+}
+
+/* Order Card */
+
+.order-card{
+    background:white;
+    border-radius:24px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+    transition:.3s;
+}
+
+.order-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(
+        0,
+        0,
+        0,
+        .12
+    );
+}
+
+.order-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.order-id{
+    font-size:24px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+/* Status */
+
+.status{
+    background:linear-gradient(
+        135deg,
+        #10b981,
+        #34d399
+    );
+    color:white;
+    padding:8px 18px;
+    border-radius:30px;
+    font-size:14px;
+    font-weight:600;
+}
+
+/* Items */
+
+.item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.item:last-child{
+    border-bottom:none;
+}
+
+.item span{
+    color:#334155;
+}
+
+.item strong{
+    color:#0f172a;
+}
+
+/* Total */
+
+.total{
+    text-align:right;
+    margin-top:20px;
+    font-size:30px;
+    font-weight:700;
+    color:#ff6b35;
+}
+
+/* Date */
+
+.date{
+    color:#64748b;
+    margin-top:10px;
+    font-size:14px;
+}
+
+/* Empty Orders */
+
+.empty{
+    background:white;
+    padding:70px;
+    border-radius:24px;
+    text-align:center;
+    font-size:22px;
+    color:#64748b;
+    box-shadow:0 10px 30px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    body{
+        padding:15px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    .header h1{
+        font-size:32px;
+    }
+
+    .order-top{
+        flex-direction:column;
+        gap:10px;
+        align-items:flex-start;
+    }
+
+    .item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:5px;
+    }
+
+    .total{
+        font-size:24px;
+    }
+
+    .empty{
+        padding:40px 20px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>📦 My Orders</h1>
+
+        <a href="{% url 'home' %}" class="home-btn">
+            ← Back Home
+        </a>
+
+    </div>
+
+    {% if orders %}
+
+    <div class="orders-grid">
+
+        {% for order in orders %}
+
+        <div class="order-card">
+
+            <div class="order-top">
+
+                <div class="order-id">
+                    Order #{{ order.id }}
+                </div>
+
+                <div class="status">
+                    {{ order.status }}
+                </div>
+
+            </div>
+
+            {% for item in order.items.all %}
+
+            <div class="item">
+
+                <span>
+                    🍽 {{ item.menu_item.name }}
+                    × {{ item.quantity }}
+                </span>
+
+                <strong>
+                    ₹{{ item.subtotal }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+            <div class="total">
+                ₹{{ order.total_amount }}
+            </div>
+
+            <div class="date">
+                📅 {{ order.created_at|date:"d M Y, h:i A" }}
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+        📭 No Orders Found
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

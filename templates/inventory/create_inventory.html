@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Inventory Item</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Poppins,sans-serif;
+        }
+
+        body{
+            background:#f5f7fb;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:30px;
+        }
+
+        .card{
+            width:100%;
+            max-width:700px;
+            background:white;
+            padding:35px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,.08);
+        }
+
+        h1{
+            text-align:center;
+            color:#111827;
+            margin-bottom:10px;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#6b7280;
+            margin-bottom:25px;
+        }
+
+        .info-box{
+            background:#fff7ed;
+            color:#9a3412;
+            padding:14px;
+            border-radius:12px;
+            margin-bottom:25px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        .form-group{
+            margin-bottom:18px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:8px;
+            font-weight:600;
+            color:#111827;
+        }
+
+        input{
+            width:100%;
+            padding:14px;
+            border:1px solid #ddd;
+            border-radius:10px;
+            font-size:15px;
+            transition:.3s;
+        }
+
+        input:focus{
+            outline:none;
+            border-color:#ff6b35;
+            box-shadow:0 0 0 3px rgba(255,107,53,.15);
+        }
+
+        .btn{
+            width:100%;
+            padding:15px;
+            background:#ff6b35;
+            color:white;
+            border:none;
+            border-radius:12px;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+            margin-top:15px;
+            transition:.3s;
+        }
+
+        .btn:hover{
+            opacity:.9;
+            transform:translateY(-2px);
+        }
+
+        .back-btn{
+            display:inline-block;
+            text-decoration:none;
+            background:#111827;
+            color:white;
+            padding:10px 20px;
+            border-radius:10px;
+            margin-bottom:20px;
+        }
+
+        .back-btn:hover{
+            opacity:.9;
+        }
+
+        @media(max-width:768px){
+
+            .card{
+                padding:25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="card">
+
+    <a href="{% url 'inventory_list' %}" class="back-btn">
+        ← Back
+    </a>
+
+    <h1>📦 Add Inventory Item</h1>
+
+    <p class="subtitle">
+        Add stock items for restaurant inventory
+    </p>
+
+    <div class="info-box">
+        ⚠ Inventory items below the minimum stock level
+        will automatically appear in Dashboard Alerts.
+    </div>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <div class="form-group">
+
+            <label>📦 Item Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Example: Rice, Coffee, Milk"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>📊 Quantity</label>
+
+            <input
+                type="number"
+                name="quantity"
+                placeholder="Enter available quantity"
+                min="0"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>📏 Unit</label>
+
+            <input
+                type="text"
+                name="unit"
+                placeholder="kg, pcs, litres"
+                required
+            >
+
+        </div>
+
+        <div class="form-group">
+
+            <label>⚠ Minimum Stock Level</label>
+
+            <input
+                type="number"
+                name="minimum_stock"
+                placeholder="Low stock alert limit"
+                min="0"
+                required
+            >
+
+        </div>
+
+        <button type="submit" class="btn">
+            📦 Add Inventory Item
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

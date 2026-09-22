@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notifications & Alerts</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    padding:40px;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.title{
+    font-size:36px;
+    font-weight:700;
+    color:#0f172a;
+}
+
+.back-btn{
+    text-decoration:none;
+    background:#ff6b35;
+    color:white;
+    padding:12px 24px;
+    border-radius:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.back-btn:hover{
+    background:#e85a29;
+}
+
+.notification-container{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.notification-card{
+    background:white;
+    border-left:6px solid #ff6b35;
+    padding:25px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.notification-card:hover{
+    transform:translateY(-4px);
+}
+
+.notification-title{
+    font-size:22px;
+    font-weight:600;
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+.notification-message{
+    color:#475569;
+    font-size:16px;
+    margin-bottom:12px;
+}
+
+.notification-time{
+    color:#94a3b8;
+    font-size:14px;
+}
+
+.empty-box{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.empty-box h3{
+    color:#64748b;
+}
+
+@media(max-width:768px){
+
+    body{
+        padding:20px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
+    }
+
+    .title{
+        font-size:28px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1 class="title">
+        🔔 Notifications & Alerts
+    </h1>
+
+    <a href="/dashboard/" class="back-btn">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+<div class="notification-container">
+
+{% for notification in notifications %}
+
+<div class="notification-card">
+
+    <div class="notification-title">
+        {{ notification.title }}
+    </div>
+
+    <div class="notification-message">
+        {{ notification.message }}
+    </div>
+
+    <div class="notification-time">
+        {{ notification.created_at }}
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="empty-box">
+
+    <h3>
+        No Notifications Available
+    </h3>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>

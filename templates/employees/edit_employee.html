@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Employee</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.form-card{
+    background:white;
+    width:100%;
+    max-width:800px;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+
+h1{
+    color:#0f172a;
+    margin-bottom:30px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+input,
+select{
+    width:100%;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:15px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+.btn{
+    margin-top:30px;
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#ff6b35;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.btn:hover{
+    opacity:.9;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="form-card">
+
+<h1>✏ Edit Employee</h1>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="form-grid">
+
+<div>
+<label>Name</label>
+<input type="text"
+       name="name"
+       value="{{ employee.name }}"
+       required>
+</div>
+
+<div>
+<label>Phone</label>
+<input type="text"
+       name="phone"
+       value="{{ employee.phone }}"
+       required>
+</div>
+
+<div>
+<label>Email</label>
+<input type="email"
+       name="email"
+       value="{{ employee.email }}"
+       required>
+</div>
+
+<div>
+<label>Role</label>
+<select name="role">
+
+<option value="Chef">Chef</option>
+<option value="Waiter">Waiter</option>
+<option value="Manager">Manager</option>
+<option value="Cashier">Cashier</option>
+
+</select>
+</div>
+
+<div>
+<label>Shift</label>
+<select name="shift">
+
+<option value="Morning">Morning</option>
+<option value="Evening">Evening</option>
+<option value="Night">Night</option>
+
+</select>
+</div>
+
+<div>
+<label>Salary</label>
+<input type="number"
+       name="salary"
+       value="{{ employee.salary }}"
+       required>
+</div>
+
+</div>
+
+<button type="submit" class="btn">
+Update Employee
+</button>
+
+</form>
+
+</div>
+
+</body>
+</html>
